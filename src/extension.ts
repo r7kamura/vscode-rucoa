@@ -1,6 +1,11 @@
 import { ExtensionContext, WorkspaceFolder, workspace, window } from "vscode";
 
-import { LanguageClient } from "vscode-languageclient/node";
+import {
+  LanguageClient,
+  LanguageClientOptions,
+  ServerOptions,
+} from "vscode-languageclient/node";
+import { inBundlerDirectory } from "./bundler";
 
 const clientByFolder: Map<WorkspaceFolder, LanguageClient> = new Map();
 
@@ -22,7 +27,7 @@ function ensureOnlyNecessaryServersAreRunning() {
   }
 
   const folders: Set<WorkspaceFolder> = new Set(workspace.workspaceFolders);
-  clientByFolder.forEach((client, folder) => {
+  clientByFolder.forEach((_client, folder) => {
     if (!folders.has(folder)) {
       stopClient(folder);
     }
@@ -41,25 +46,8 @@ function startClient(folder: WorkspaceFolder) {
   const client = new LanguageClient(
     "rucoa",
     "Rucoa Language Server",
-    {
-      command: "bundle",
-      args: ["exec", "rucoa"],
-      options: {
-        cwd: folder.uri.fsPath,
-      },
-    },
-    {
-      documentSelector: [
-        {
-          language: "ruby",
-          scheme: "file",
-        },
-        {
-          language: "ruby",
-          scheme: "untitled",
-        },
-      ],
-    }
+    createServerOptions(folder),
+    createClientOptions()
   );
   clientByFolder.set(folder, client);
   client.start();
@@ -81,4 +69,38 @@ function stopAllClients() {
   clientByFolder.forEach((_client, folder) => {
     stopClient(folder);
   });
+}
+
+function createServerOptions(folder: WorkspaceFolder): ServerOptions {
+  const commandAndArguments = createCommandAndArguments(folder);
+  return {
+    command: commandAndArguments.shift()!,
+    args: commandAndArguments,
+    options: {
+      cwd: folder.uri.fsPath,
+    },
+  };
+}
+
+function createClientOptions(): LanguageClientOptions {
+  return {
+    documentSelector: [
+      {
+        language: "ruby",
+        scheme: "file",
+      },
+      {
+        language: "ruby",
+        scheme: "untitled",
+      },
+    ],
+  };
+}
+
+function createCommandAndArguments(folder: WorkspaceFolder): string[] {
+  if (inBundlerDirectory(folder.uri.fsPath)) {
+    return ["bundle", "exec", "rucoa"];
+  } else {
+    return ["rucoa"];
+  }
 }

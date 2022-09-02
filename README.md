@@ -10,7 +10,7 @@ VSCode extension for [rucoa](https://github.com/r7kamura/rucoa).
 
 ## Setup
 
-This extenison expects that `rucoa` is available in your workspace. If Gemfile exists in your current directory or any of its ancestor directories, `bundle exec rucoa` is used instead, so you need to add `gem 'rucoa'` to your Gemfile in such case:
+This extension expects that `rucoa` is available in your workspace. If your current directory is managed by Bundler, it uses `bundle exec rucoa` instead, so you need to add `gem 'rucoa'` to your Gemfile in such case:
 
 ```ruby
 # Gemfile
