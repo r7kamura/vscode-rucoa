@@ -2,7 +2,7 @@
 
 [![build](https://github.com/r7kamura/vscode-rucoa/actions/workflows/build.yml/badge.svg)](https://github.com/r7kamura/vscode-rucoa/actions/workflows/build.yml)
 
-VSCode extension for rucoa, a Ruby Code Analyzer.
+VSCode extension for [rucoa](https://github.com/r7kamura/rucoa).
 
 ## Install
 

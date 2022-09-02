@@ -1,7 +1,7 @@
 {
   "name": "vscode-rucoa",
   "displayName": "Rucoa",
-  "description": "VSCode extension for Rucoa, a Ruby Code Analyzer",
+  "description": "VSCode extension for Rucoa",
   "author": "r7kamura",
   "license": "MIT",
   "version": "0.0.1",
