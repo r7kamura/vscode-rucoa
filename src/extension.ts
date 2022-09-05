@@ -1,3 +1,4 @@
+import { execSync } from "child_process";
 import { ExtensionContext, WorkspaceFolder, workspace, window } from "vscode";
 
 import {
@@ -10,6 +11,12 @@ import { inBundlerDirectory } from "./bundler";
 const clientByFolder: Map<WorkspaceFolder, LanguageClient> = new Map();
 
 export function activate(context: ExtensionContext) {
+  workspace.onDidChangeConfiguration((event) => {
+    if (event.affectsConfiguration("rucoa")) {
+      restartAllClients();
+    }
+  });
+
   workspace.onDidChangeWorkspaceFolders(() => {
     ensureOnlyNecessaryServersAreRunning();
   });
@@ -43,6 +50,10 @@ function startClient(folder: WorkspaceFolder) {
     return;
   }
 
+  if (!canStartClientOn(folder)) {
+    return;
+  }
+
   const client = new LanguageClient(
     "rucoa",
     "Rucoa Language Server",
@@ -69,6 +80,11 @@ function stopAllClients() {
   clientByFolder.forEach((_client, folder) => {
     stopClient(folder);
   });
+}
+
+function restartAllClients() {
+  stopAllClients();
+  ensureOnlyNecessaryServersAreRunning();
 }
 
 function createServerOptions(folder: WorkspaceFolder): ServerOptions {
@@ -102,5 +118,27 @@ function createCommandAndArguments(folder: WorkspaceFolder): string[] {
     return ["bundle", "exec", "rucoa"];
   } else {
     return ["rucoa"];
+  }
+}
+
+function canStartClientOn(folder: WorkspaceFolder): boolean {
+  switch (workspace.getConfiguration("rucoa").get("enable")) {
+    case "true":
+      return true;
+    case "false":
+      return false;
+    default:
+      return checkIfRucoaIsExecutable(folder);
+  }
+}
+
+function checkIfRucoaIsExecutable(folder: WorkspaceFolder): boolean {
+  try {
+    execSync(createCommandAndArguments(folder).concat(["--help"]).join(" "), {
+      cwd: folder.uri.fsPath,
+    });
+    return true;
+  } catch (_error) {
+    return false;
   }
 }

@@ -20,6 +20,29 @@
     "onLanguage:ruby"
   ],
   "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Rucoa",
+      "type": "object",
+      "properties": {
+        "rucoa.enable": {
+          "description": "Enable Rucoa",
+          "type": "string",
+          "default": "auto",
+          "enum": [
+            "auto",
+            "false",
+            "true"
+          ],
+          "enumDescriptions": [
+            "Enable if `rucoa` is executable in the workspace.",
+            "Always disable.",
+            "Always enable."
+          ]
+        }
+      }
+    }
+  },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
