@@ -13,22 +13,22 @@ const clientByFolder: Map<WorkspaceFolder, LanguageClient> = new Map();
 export function activate(context: ExtensionContext) {
   workspace.onDidChangeConfiguration((event) => {
     if (event.affectsConfiguration("rucoa")) {
-      restartAllClients();
+      restartClients();
     }
   });
 
   workspace.onDidChangeWorkspaceFolders(() => {
-    ensureOnlyNecessaryServersAreRunning();
+    ensureClients();
   });
 
-  ensureOnlyNecessaryServersAreRunning();
+  ensureClients();
 }
 
 export function deactivate() {
-  stopAllClients();
+  stopClients();
 }
 
-function ensureOnlyNecessaryServersAreRunning() {
+function ensureClients() {
   if (!workspace.workspaceFolders) {
     return;
   }
@@ -76,15 +76,15 @@ function stopClient(folder: WorkspaceFolder) {
   clientByFolder.delete(folder);
 }
 
-function stopAllClients() {
+function stopClients() {
   clientByFolder.forEach((_client, folder) => {
     stopClient(folder);
   });
 }
 
-function restartAllClients() {
-  stopAllClients();
-  ensureOnlyNecessaryServersAreRunning();
+function restartClients() {
+  stopClients();
+  ensureClients();
 }
 
 function createServerOptions(folder: WorkspaceFolder): ServerOptions {
