@@ -110,6 +110,9 @@ function createClientOptions(): LanguageClientOptions {
         scheme: "untitled",
       },
     ],
+    synchronize: {
+      configurationSection: "rucoa",
+    },
   };
 }
 
