@@ -26,18 +26,33 @@
       "type": "object",
       "properties": {
         "rucoa.enable": {
-          "description": "Enable Rucoa",
+          "description": "Whether to enable Rucoa.",
           "type": "string",
           "default": "auto",
           "enum": [
+            "always",
             "auto",
-            "false",
-            "true"
+            "never"
           ],
           "enumDescriptions": [
+            "Always enable.",
             "Enable if `rucoa` is executable in the workspace.",
-            "Always disable.",
-            "Always enable."
+            "Never enable."
+          ]
+        },
+        "rucoa.useBundler": {
+          "description": "Whether to use Bundler.",
+          "type": "string",
+          "default": "auto",
+          "enum": [
+            "always",
+            "auto",
+            "never"
+          ],
+          "enumDescriptions": [
+            "Always use.",
+            "Use if `Gemfile` is found in the workspace.",
+            "Never use."
           ]
         }
       }

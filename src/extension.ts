@@ -114,21 +114,52 @@ function createClientOptions(): LanguageClientOptions {
 }
 
 function createCommandAndArguments(folder: WorkspaceFolder): string[] {
-  if (inBundlerDirectory(folder.uri.fsPath)) {
+  if (canUseBundlerOn(folder)) {
     return ["bundle", "exec", "rucoa"];
   } else {
     return ["rucoa"];
   }
 }
 
+enum ConfigurationValueRucoaEnable {
+  Always = "always",
+  Auto = "auto",
+  Never = "never",
+}
+
 function canStartClientOn(folder: WorkspaceFolder): boolean {
-  switch (workspace.getConfiguration("rucoa").get("enable")) {
-    case "true":
+  switch (
+    workspace
+      .getConfiguration("rucoa")
+      .get("enable") as ConfigurationValueRucoaEnable
+  ) {
+    case "always":
       return true;
-    case "false":
+    case "never":
       return false;
     default:
       return checkIfRucoaIsExecutable(folder);
+  }
+}
+
+enum ConfigurationValueRucoaUseBundler {
+  Always = "always",
+  Auto = "auto",
+  Never = "never",
+}
+
+function canUseBundlerOn(folder: WorkspaceFolder): boolean {
+  switch (
+    workspace
+      .getConfiguration("rucoa")
+      .get("useBundler") as ConfigurationValueRucoaUseBundler
+  ) {
+    case "always":
+      return true;
+    case "never":
+      return false;
+    default:
+      return inBundlerDirectory(folder.uri.fsPath);
   }
 }
 
