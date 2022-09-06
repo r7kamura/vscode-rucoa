@@ -131,7 +131,7 @@ function canStartClientOn(folder: WorkspaceFolder): boolean {
   switch (
     workspace
       .getConfiguration("rucoa")
-      .get("enable") as ConfigurationValueRucoaEnable
+      .get("base.enable") as ConfigurationValueRucoaEnable
   ) {
     case "always":
       return true;
@@ -152,7 +152,7 @@ function canUseBundlerOn(folder: WorkspaceFolder): boolean {
   switch (
     workspace
       .getConfiguration("rucoa")
-      .get("useBundler") as ConfigurationValueRucoaUseBundler
+      .get("base.useBundler") as ConfigurationValueRucoaUseBundler
   ) {
     case "always":
       return true;
