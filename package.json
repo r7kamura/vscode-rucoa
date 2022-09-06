@@ -25,7 +25,7 @@
       "title": "Rucoa",
       "type": "object",
       "properties": {
-        "rucoa.enable": {
+        "rucoa.base.enable": {
           "description": "Whether to enable Rucoa.",
           "type": "string",
           "default": "auto",
@@ -40,7 +40,7 @@
             "Never enable."
           ]
         },
-        "rucoa.useBundler": {
+        "rucoa.base.useBundler": {
           "description": "Whether to use Bundler.",
           "type": "string",
           "default": "auto",
