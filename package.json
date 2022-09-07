@@ -65,6 +65,11 @@
           "type": "boolean",
           "default": true
         },
+        "rucoa.feature.documentSymbol.enable": {
+          "description": "Enable document symbol.",
+          "type": "boolean",
+          "default": true
+        },
         "rucoa.feature.formatting.enable": {
           "description": "Enable formatting.",
           "type": "boolean",
