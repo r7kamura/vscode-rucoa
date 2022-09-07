@@ -54,6 +54,26 @@
             "Use if `Gemfile` is found in the workspace.",
             "Never use."
           ]
+        },
+        "rucoa.feature.codeAction.enable": {
+          "description": "Enable code action.",
+          "type": "boolean",
+          "default": true
+        },
+        "rucoa.feature.diagnostics.enable": {
+          "description": "Enable diagnostics.",
+          "type": "boolean",
+          "default": true
+        },
+        "rucoa.feature.formatting.enable": {
+          "description": "Enable formatting.",
+          "type": "boolean",
+          "default": true
+        },
+        "rucoa.feature.selectionRange.enable": {
+          "description": "Enable selection range.",
+          "type": "boolean",
+          "default": true
         }
       }
     }
