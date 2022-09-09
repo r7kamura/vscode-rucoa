@@ -79,6 +79,11 @@
           "description": "Enable selection range.",
           "type": "boolean",
           "default": true
+        },
+        "rucoa.feature.signatureHelp.enable": {
+          "description": "Enable signature help.",
+          "type": "boolean",
+          "default": true
         }
       }
     }
