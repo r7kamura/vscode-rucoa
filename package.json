@@ -25,6 +25,11 @@
       "title": "Rucoa",
       "type": "object",
       "properties": {
+        "rucoa.base.debug": {
+          "description": "Enable debug mode.",
+          "type": "boolean",
+          "default": false
+        },
         "rucoa.base.enable": {
           "description": "Whether to enable Rucoa.",
           "type": "string",
