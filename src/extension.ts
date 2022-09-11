@@ -12,7 +12,7 @@ const clientByFolder: Map<WorkspaceFolder, LanguageClient> = new Map();
 
 export function activate(context: ExtensionContext) {
   workspace.onDidChangeConfiguration((event) => {
-    if (event.affectsConfiguration("rucoa")) {
+    if (event.affectsConfiguration("rucoa.base")) {
       restartClients();
     }
   });
