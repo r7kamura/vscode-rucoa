@@ -65,6 +65,11 @@
           "type": "boolean",
           "default": true
         },
+        "rucoa.feature.completion.enable": {
+          "description": "Enable completion.",
+          "type": "boolean",
+          "default": true
+        },
         "rucoa.feature.diagnostics.enable": {
           "description": "Enable diagnostics.",
           "type": "boolean",
