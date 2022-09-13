@@ -4,7 +4,7 @@
   "description": "VSCode extension for Rucoa",
   "author": "r7kamura",
   "license": "MIT",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/r7kamura/vscode-rucoa.git"
