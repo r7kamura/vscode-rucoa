@@ -80,6 +80,11 @@
           "type": "boolean",
           "default": true
         },
+        "rucoa.feature.hover.enable": {
+          "description": "Enable hover.",
+          "type": "boolean",
+          "default": true
+        },
         "rucoa.feature.selectionRange.enable": {
           "description": "Enable selection range.",
           "type": "boolean",
