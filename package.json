@@ -70,6 +70,11 @@
           "type": "boolean",
           "default": true
         },
+        "rucoa.feature.definition.enable": {
+          "description": "Enable definition.",
+          "type": "boolean",
+          "default": true
+        },
         "rucoa.feature.diagnostics.enable": {
           "description": "Enable diagnostics.",
           "type": "boolean",
