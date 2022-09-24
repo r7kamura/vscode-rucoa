@@ -1,5 +1,12 @@
 import { execSync } from "child_process";
-import { ExtensionContext, WorkspaceFolder, workspace, window } from "vscode";
+import {
+  ExtensionContext,
+  WorkspaceFolder,
+  workspace,
+  window,
+  RelativePattern,
+  FileSystemWatcher,
+} from "vscode";
 
 import {
   LanguageClient,
@@ -9,6 +16,8 @@ import {
 import { inBundlerDirectory } from "./bundler";
 
 const clientByFolder: Map<WorkspaceFolder, LanguageClient> = new Map();
+const fileSystemWatcherByFolder: Map<WorkspaceFolder, FileSystemWatcher> =
+  new Map();
 
 export function activate(context: ExtensionContext) {
   workspace.onDidChangeConfiguration((event) => {
@@ -54,6 +63,14 @@ function startClient(folder: WorkspaceFolder) {
     return;
   }
 
+  const fileSystemWatcher = workspace.createFileSystemWatcher(
+    new RelativePattern(folder.uri.fsPath, "**/{.rubocop.yml,.ruby-version,Gemfile.lock}")
+  );
+  fileSystemWatcher.onDidChange(() => {
+    restartClient(folder);
+  });
+  fileSystemWatcherByFolder.set(folder, fileSystemWatcher);
+
   const client = new LanguageClient(
     "rucoa",
     "Rucoa Language Server",
@@ -74,6 +91,12 @@ function stopClient(folder: WorkspaceFolder) {
 
   client.stop();
   clientByFolder.delete(folder);
+  fileSystemWatcherByFolder.get(folder)?.dispose();
+}
+
+function restartClient(folder: WorkspaceFolder) {
+  stopClient(folder);
+  startClient(folder);
 }
 
 function stopClients() {
