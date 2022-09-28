@@ -64,7 +64,10 @@ function startClient(folder: WorkspaceFolder) {
   }
 
   const fileSystemWatcher = workspace.createFileSystemWatcher(
-    new RelativePattern(folder.uri.fsPath, "**/{.rubocop.yml,.ruby-version,Gemfile.lock}")
+    new RelativePattern(
+      folder.uri.fsPath,
+      "**/{.rubocop.yml,.ruby-version,Gemfile.lock}"
+    )
   );
   fileSystemWatcher.onDidChange(() => {
     restartClient(folder);

@@ -90,6 +90,11 @@
           "type": "boolean",
           "default": true
         },
+        "rucoa.feature.highlight.enable": {
+          "description": "Enable highlight.",
+          "type": "boolean",
+          "default": true
+        },
         "rucoa.feature.hover.enable": {
           "description": "Enable hover.",
           "type": "boolean",
